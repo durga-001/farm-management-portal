@@ -20,20 +20,13 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-  signup: (body) => request("/auth/signup", { method: "POST", body: JSON.stringify(body) }),
-  login: (body) => request("/auth/login", { method: "POST", body: JSON.stringify(body) }),
+  signup: (body) =>
+    request("/auth/signup", { method: "POST", body: JSON.stringify(body) }),
+  login: (body) =>
+    request("/auth/login", { method: "POST", body: JSON.stringify(body) }),
 
-  getAnimals: (farmId) => request(`/animals${farmId ? `?farmId=${farmId}` : ""}`),
-  addAnimal: (body) => request("/animals", { method: "POST", body: JSON.stringify(body) }),
-  deleteAnimal: (id) => request(`/animals/${id}`, { method: "DELETE" }),
-  setAnimalStatus: (id, status) => request(`/animals/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) }),
-
-  addMedicine: (body) => request("/medicine", { method: "POST", body: JSON.stringify(body) }),
-
-  getFarms: () => request("/farms"),
-
-  getNotifications: () => request("/notifications"),
-  sendNotification: (body) => request("/notifications", { method: "POST", body: JSON.stringify(body) }),
-
-  getRegistrationStats: () => request("/stats/registrations-by-location"),
+  getAnimals: (farmId) =>
+    request(`/animals${farmId ? `?farmId=${farmId}` : ""}`),
+  addAnimal: (body) =>
+    request("/animals", { method: "POST", body: JSON.stringify(body) }),
 };

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { api } from "../services/api";
 import { useAuth } from "./AuthContext";
 
@@ -9,6 +15,8 @@ export function DataProvider({ children }) {
   const [animals, setAnimals] = useState([]);
   const [farms, setFarms] = useState([]);
   const [notifications, setNotifications] = useState([]);
+  const [myVet, setMyVet] = useState(null);
+  const [vets, setVets] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const refreshAnimals = useCallback(async () => {
@@ -17,7 +25,8 @@ export function DataProvider({ children }) {
   }, [user]);
 
   const refreshFarms = useCallback(async () => {
-    if (user?.role === "admin") setFarms(await api.getFarms());
+    if (user?.role === "admin" || user?.role === "vet")
+      setFarms(await api.getFarms());
   }, [user]);
 
   const refreshNotifications = useCallback(async () => {
@@ -25,11 +34,32 @@ export function DataProvider({ children }) {
     setNotifications(await api.getNotifications());
   }, [user]);
 
+  const refreshMyVet = useCallback(async () => {
+    if (user?.role === "farmer") setMyVet(await api.getMyVet());
+  }, [user]);
+
+  const refreshVets = useCallback(async () => {
+    if (user?.role === "admin") setVets(await api.getVets());
+  }, [user]);
+
   useEffect(() => {
     if (!user) return;
     setLoading(true);
-    Promise.all([refreshAnimals(), refreshFarms(), refreshNotifications()]).finally(() => setLoading(false));
-  }, [user, refreshAnimals, refreshFarms, refreshNotifications]);
+    Promise.all([
+      refreshAnimals(),
+      refreshFarms(),
+      refreshNotifications(),
+      refreshMyVet(),
+      refreshVets(),
+    ]).finally(() => setLoading(false));
+  }, [
+    user,
+    refreshAnimals,
+    refreshFarms,
+    refreshNotifications,
+    refreshMyVet,
+    refreshVets,
+  ]);
 
   const addAnimal = async (animal) => {
     await api.addAnimal(animal);
@@ -39,22 +69,50 @@ export function DataProvider({ children }) {
     await api.deleteAnimal(id);
     await refreshAnimals();
   };
-  const addMedicineRecord = async (animalId, medicine) => {
-    await api.addMedicine({ animalId, medicine });
+  const addMedicineRecord = async (payload) => {
+    await api.addMedicine(payload);
     await refreshAnimals();
   };
   const setAnimalStatus = async (id, status) => {
     await api.setAnimalStatus(id, status);
     await refreshAnimals();
   };
-  const sendNotification = async (farmId, message) => {
-    await api.sendNotification({ farmId, message });
+  const sendNotification = async (farmId, message, title) => {
+    await api.sendNotification({ farmId, message, title });
     await refreshNotifications();
+  };
+  const vetSendNotification = async (farmId, message, title) => {
+    await api.vetSendNotification({ farmId, message, title });
+    await refreshNotifications();
+  };
+  const createVet = async (body) => {
+    await api.createVet(body);
+    await refreshVets();
+  };
+  const assignVetToFarm = async (farmId, vetId) => {
+    await api.assignVetToFarm(farmId, vetId);
+    await refreshFarms();
   };
 
   return (
     <DataContext.Provider
-      value={{ animals, farms, notifications, loading, addAnimal, deleteAnimal, addMedicineRecord, setAnimalStatus, sendNotification }}
+      value={{
+        animals,
+        farms,
+        notifications,
+        myVet,
+        vets,
+        loading,
+        addAnimal,
+        deleteAnimal,
+        addMedicineRecord,
+        setAnimalStatus,
+        sendNotification,
+        vetSendNotification,
+        createVet,
+        assignVetToFarm,
+        refreshFarms,
+      }}
     >
       {children}
     </DataContext.Provider>

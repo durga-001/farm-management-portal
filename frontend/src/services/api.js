@@ -29,4 +29,41 @@ export const api = {
     request(`/animals${farmId ? `?farmId=${farmId}` : ""}`),
   addAnimal: (body) =>
     request("/animals", { method: "POST", body: JSON.stringify(body) }),
+  deleteAnimal: (id) => request(`/animals/${id}`, { method: "DELETE" }),
+  setAnimalStatus: (id, status) =>
+    request(`/animals/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
+
+  addMedicine: (body) =>
+    request("/medicine", { method: "POST", body: JSON.stringify(body) }),
+
+  getFarms: () => request("/farms"),
+  assignVetToFarm: (farmId, vetId) =>
+    request(`/farms/${farmId}/assign-vet`, {
+      method: "PATCH",
+      body: JSON.stringify({ vetId }),
+    }),
+
+  getNotifications: () => request("/notifications"),
+  sendNotification: (body) =>
+    request("/notifications", { method: "POST", body: JSON.stringify(body) }),
+  vetSendNotification: (body) =>
+    request("/notifications/vet-send", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+
+  getRegistrationStats: () => request("/stats/registrations-by-location"),
+  getPublicStats: () => request("/stats/public"),
+
+  createVet: (body) =>
+    request("/vets", { method: "POST", body: JSON.stringify(body) }),
+  getVets: () => request("/vets"),
+  getMyVet: () => request("/vets/mine"),
+
+  getDataDiagnosis: () => request("/diagnosis/data"),
+  getAmuDiagnosis: () => request("/diagnosis/amu"),
+  getRiskCompliance: () => request("/diagnosis/risk"),
 };

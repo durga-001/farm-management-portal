@@ -4,6 +4,52 @@ import { useData } from "../../context/DataContext";
 import { api } from "../../services/api";
 import StatCard from "../../components/StatCard";
 
+function VetPicker() {
+  const { vets, assignVetToFarm } = useData();
+  const { user } = useAuth();
+  const [selected, setSelected] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const handleAssign = async () => {
+    if (!selected) return;
+    setSaving(true);
+    try {
+      await assignVetToFarm(user.farmId, selected);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <p className="text-sm text-gray-400">
+        No veterinarian has been assigned to your farm yet.
+      </p>
+      <div className="flex gap-2">
+        <select
+          value={selected}
+          onChange={(e) => setSelected(e.target.value)}
+          className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm"
+        >
+          <option value="">Choose a veterinarian</option>
+          {vets.map((v) => (
+            <option key={v._id} value={v._id}>
+              {v.name} ({v.email})
+            </option>
+          ))}
+        </select>
+        <button
+          onClick={handleAssign}
+          disabled={!selected || saving}
+          className="bg-green-600 text-white rounded-md px-4 py-2 text-sm font-medium hover:bg-green-700 disabled:opacity-50"
+        >
+          {saving ? "Saving…" : "Assign"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const riskColor = {
   LOW: "text-green-700 bg-green-50",
   MEDIUM: "text-amber-700 bg-amber-50",
@@ -74,9 +120,7 @@ export default function FarmerDashboard() {
                   {myVet.phone && <p>{myVet.phone}</p>}
                 </div>
               ) : (
-                <p className="text-sm text-gray-400">
-                  No veterinarian has been assigned to your farm yet.
-                </p>
+                <VetPicker />
               )}
             </div>
 

@@ -13,18 +13,15 @@ import Animals from "./pages/farmer/Animals";
 import AddAnimal from "./pages/farmer/AddAnimal";
 import AddMedicine from "./pages/farmer/AddMedicine";
 
-import AdminLayout from "./layouts/AdminLayout";
-import AdminOverview from "./pages/admin/Overview";
-import Farms from "./pages/admin/Farms";
-import RiskMonitor from "./pages/admin/RiskMonitor";
-import AdminNotifications from "./pages/admin/Notifications";
-import AdminVets from "./pages/admin/Vets";
-
 import VetLayout from "./layouts/VetLayout";
+import VetOverview from "./pages/vet/Overview";
 import VetFarmers from "./pages/vet/Farmers";
 import DataDiagnosis from "./pages/vet/DataDiagnosis";
 import AmuDiagnosis from "./pages/vet/AmuDiagnosis";
 import RiskCompliance from "./pages/vet/RiskCompliance";
+import VetRiskManagement from "./pages/vet/RiskManagement";
+import VetAssistant from "./pages/vet/VetAssistant";
+import DrugReference from "./pages/vet/DrugReference";
 import VetNotifications from "./pages/vet/Notifications";
 
 export default function App() {
@@ -51,21 +48,6 @@ export default function App() {
           </Route>
 
           <Route
-            path="/admin"
-            element={
-              <ProtectedRoute role="admin">
-                <AdminLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="overview" element={<AdminOverview />} />
-            <Route path="farms" element={<Farms />} />
-            <Route path="vets" element={<AdminVets />} />
-            <Route path="risk-monitor" element={<RiskMonitor />} />
-            <Route path="notifications" element={<AdminNotifications />} />
-          </Route>
-
-          <Route
             path="/vet"
             element={
               <ProtectedRoute role="vet">
@@ -73,10 +55,14 @@ export default function App() {
               </ProtectedRoute>
             }
           >
+            <Route path="overview" element={<VetOverview />} />
             <Route path="farmers" element={<VetFarmers />} />
+            <Route path="assistant" element={<VetAssistant />} />
+            <Route path="drug-reference" element={<DrugReference />} />
             <Route path="data-diagnosis" element={<DataDiagnosis />} />
             <Route path="amu-diagnosis" element={<AmuDiagnosis />} />
             <Route path="risk-compliance" element={<RiskCompliance />} />
+            <Route path="risk-management" element={<VetRiskManagement />} />
             <Route path="notifications" element={<VetNotifications />} />
           </Route>
         </Routes>

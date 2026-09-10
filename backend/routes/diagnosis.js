@@ -14,15 +14,13 @@ router.use(requireAuth);
 
 async function scopedData(req) {
   let animals;
-  if (req.user.role === "farmer") {
-    animals = await Animal.find({ farm: req.user.farmId });
-  } else if (req.user.role === "vet") {
+  if (req.user.role === "vet") {
     const farms = await Farm.find({ assignedVet: req.user.vetId }).select(
       "_id",
     );
     animals = await Animal.find({ farm: { $in: farms.map((f) => f._id) } });
   } else {
-    animals = await Animal.find();
+    animals = await Animal.find({ farm: req.user.farmId });
   }
   const animalIds = animals.map((a) => a._id);
   const records = await MedicineRecord.find({ animal: { $in: animalIds } });
@@ -32,12 +30,12 @@ async function scopedData(req) {
   return { animals, records, animalsById };
 }
 
-router.get("/data", requireRole("vet", "admin"), async (req, res) => {
+router.get("/data", requireRole("vet"), async (req, res) => {
   const { records, animalsById } = await scopedData(req);
   res.json(runDataDiagnosis(records, animalsById));
 });
 
-router.get("/amu", requireRole("vet", "admin"), async (req, res) => {
+router.get("/amu", requireRole("vet"), async (req, res) => {
   const { records, animalsById } = await scopedData(req);
   const farms = await Farm.find().select("name");
   const farmsById = Object.fromEntries(farms.map((f) => [String(f._id), f]));

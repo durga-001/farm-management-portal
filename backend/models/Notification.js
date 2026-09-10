@@ -5,7 +5,7 @@ const notificationSchema = new mongoose.Schema(
     farm: { type: mongoose.Schema.Types.ObjectId, ref: "Farm", default: null },
     title: { type: String, default: "" },
     message: { type: String, required: true },
-    senderRole: { type: String, enum: ["admin", "vet"], default: "admin" },
+    senderRole: { type: String, enum: ["vet"], default: "vet" },
     sentBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Veterinarian",

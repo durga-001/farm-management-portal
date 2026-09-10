@@ -11,8 +11,36 @@ function sign(payload) {
 }
 
 router.post("/signup", async (req, res) => {
-  const { name, farmName, location, email, password } = req.body;
-  if (!name || !farmName || !location || !email || !password) {
+  const { role = "farmer", name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  if (role === "vet") {
+    const { phone, licenseNumber } = req.body;
+    const exists = await Veterinarian.findOne({ email });
+    if (exists)
+      return res.status(409).json({ message: "Email already registered." });
+
+    const hashed = await bcrypt.hash(password, 10);
+    const vet = await Veterinarian.create({
+      name,
+      email,
+      password: hashed,
+      phone: phone || "",
+      licenseNumber: licenseNumber || "",
+    });
+
+    const token = sign({ role: "vet", vetId: vet._id });
+    return res.status(201).json({
+      token,
+      user: { role: "vet", vetId: vet._id, name: vet.name, email: vet.email },
+    });
+  }
+
+  const { farmName, location } = req.body;
+  if (!farmName || !location) {
     return res.status(400).json({ message: "All fields are required." });
   }
   const exists = await Farm.findOne({ email });
@@ -46,17 +74,6 @@ router.post("/login", async (req, res) => {
     return res
       .status(400)
       .json({ message: "Email and password are required." });
-
-  if (role === "admin") {
-    if (
-      email === process.env.ADMIN_EMAIL &&
-      password === process.env.ADMIN_PASSWORD
-    ) {
-      const token = sign({ role: "admin" });
-      return res.json({ token, user: { role: "admin", name: "Admin" } });
-    }
-    return res.status(401).json({ message: "Invalid admin credentials." });
-  }
 
   if (role === "vet") {
     const vet = await Veterinarian.findOne({ email });

@@ -47,8 +47,6 @@ export const api = {
     }),
 
   getNotifications: () => request("/notifications"),
-  sendNotification: (body) =>
-    request("/notifications", { method: "POST", body: JSON.stringify(body) }),
   vetSendNotification: (body) =>
     request("/notifications/vet-send", {
       method: "POST",
@@ -58,12 +56,29 @@ export const api = {
   getRegistrationStats: () => request("/stats/registrations-by-location"),
   getPublicStats: () => request("/stats/public"),
 
-  createVet: (body) =>
-    request("/vets", { method: "POST", body: JSON.stringify(body) }),
   getVets: () => request("/vets"),
   getMyVet: () => request("/vets/mine"),
 
   getDataDiagnosis: () => request("/diagnosis/data"),
   getAmuDiagnosis: () => request("/diagnosis/amu"),
   getRiskCompliance: () => request("/diagnosis/risk"),
+
+  askAssistant: (question) =>
+    request("/assistant/ask", {
+      method: "POST",
+      body: JSON.stringify({ question }),
+    }),
+
+  getDrugReferences: (q) =>
+    request(`/drug-reference${q ? `?q=${encodeURIComponent(q)}` : ""}`),
+  addDrugReference: (body) =>
+    request("/drug-reference", { method: "POST", body: JSON.stringify(body) }),
+  deleteDrugReference: (id) =>
+    request(`/drug-reference/${id}`, { method: "DELETE" }),
+
+  aiDraftAnimal: (imageBase64, mediaType) =>
+    request("/animals/ai-draft", {
+      method: "POST",
+      body: JSON.stringify({ imageBase64, mediaType }),
+    }),
 };

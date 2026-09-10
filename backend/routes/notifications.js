@@ -17,19 +17,6 @@ router.get("/", async (req, res) => {
   res.json(notes);
 });
 
-router.post("/", requireRole("admin"), async (req, res) => {
-  const { farmId, title, message } = req.body;
-  if (!message)
-    return res.status(400).json({ message: "Message is required." });
-  const note = await Notification.create({
-    farm: farmId === "all" ? null : farmId,
-    title: title || "",
-    message,
-    senderRole: "admin",
-  });
-  res.status(201).json(note);
-});
-
 router.post("/vet-send", requireRole("vet"), async (req, res) => {
   const { farmId, title, message } = req.body;
   if (!message)

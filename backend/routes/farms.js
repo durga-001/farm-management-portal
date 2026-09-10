@@ -4,10 +4,10 @@ import Animal from "../models/Animal.js";
 import { requireAuth, requireRole } from "../middleware/auth.js";
 
 const router = express.Router();
-router.use(requireAuth, requireRole("admin", "vet"));
+router.use(requireAuth);
 
-router.get("/", async (req, res) => {
-  const query = req.user.role === "vet" ? { assignedVet: req.user.vetId } : {};
+router.get("/", requireRole("vet"), async (req, res) => {
+  const query = { assignedVet: req.user.vetId };
   const farms = await Farm.find(query)
     .select("-password")
     .populate("assignedVet", "name email")
@@ -21,7 +21,12 @@ router.get("/", async (req, res) => {
   res.json(withCounts);
 });
 
-router.patch("/:id/assign-vet", requireRole("admin"), async (req, res) => {
+router.patch("/:id/assign-vet", requireRole("farmer"), async (req, res) => {
+  if (String(req.params.id) !== String(req.user.farmId)) {
+    return res
+      .status(403)
+      .json({ message: "You can only update your own farm." });
+  }
   const { vetId } = req.body;
   const farm = await Farm.findByIdAndUpdate(
     req.params.id,

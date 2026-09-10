@@ -15,8 +15,7 @@ export default function Login() {
     if (!email || !password) return setError("Enter your email and password.");
     try {
       const user = await login(role, email, password);
-      if (user.role === "admin") navigate("/admin/overview");
-      else if (user.role === "vet") navigate("/vet/farmers");
+      if (user.role === "vet") navigate("/vet/overview");
       else navigate("/farmer/dashboard");
     } catch (err) {
       setError(err.message);
@@ -45,13 +44,6 @@ export default function Login() {
           >
             Veterinarian
           </button>
-          <button
-            type="button"
-            onClick={() => setRole("admin")}
-            className={`flex-1 py-2 text-sm rounded-md border ${role === "admin" ? "bg-amber-600 text-white border-amber-600" : "border-gray-300 text-gray-600"}`}
-          >
-            Admin
-          </button>
         </div>
         <label className="block text-sm text-gray-600 mb-1">Email</label>
         <input
@@ -76,14 +68,12 @@ export default function Login() {
         >
           Log in
         </button>
-        {role === "farmer" && (
-          <p className="text-sm text-gray-500 mt-4 text-center">
-            No account?{" "}
-            <Link to="/signup" className="text-green-700">
-              Sign up
-            </Link>
-          </p>
-        )}
+        <p className="text-sm text-gray-500 mt-4 text-center">
+          No account?{" "}
+          <Link to="/signup" className="text-green-700">
+            Sign up
+          </Link>
+        </p>
       </form>
     </div>
   );

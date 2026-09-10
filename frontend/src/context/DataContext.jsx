@@ -25,8 +25,7 @@ export function DataProvider({ children }) {
   }, [user]);
 
   const refreshFarms = useCallback(async () => {
-    if (user?.role === "admin" || user?.role === "vet")
-      setFarms(await api.getFarms());
+    if (user?.role === "vet") setFarms(await api.getFarms());
   }, [user]);
 
   const refreshNotifications = useCallback(async () => {
@@ -39,7 +38,8 @@ export function DataProvider({ children }) {
   }, [user]);
 
   const refreshVets = useCallback(async () => {
-    if (user?.role === "admin") setVets(await api.getVets());
+    if (user?.role === "farmer" || user?.role === "vet")
+      setVets(await api.getVets());
   }, [user]);
 
   useEffect(() => {
@@ -77,21 +77,13 @@ export function DataProvider({ children }) {
     await api.setAnimalStatus(id, status);
     await refreshAnimals();
   };
-  const sendNotification = async (farmId, message, title) => {
-    await api.sendNotification({ farmId, message, title });
-    await refreshNotifications();
-  };
   const vetSendNotification = async (farmId, message, title) => {
     await api.vetSendNotification({ farmId, message, title });
     await refreshNotifications();
   };
-  const createVet = async (body) => {
-    await api.createVet(body);
-    await refreshVets();
-  };
   const assignVetToFarm = async (farmId, vetId) => {
     await api.assignVetToFarm(farmId, vetId);
-    await refreshFarms();
+    await refreshMyVet();
   };
 
   return (
@@ -107,9 +99,7 @@ export function DataProvider({ children }) {
         deleteAnimal,
         addMedicineRecord,
         setAnimalStatus,
-        sendNotification,
         vetSendNotification,
-        createVet,
         assignVetToFarm,
         refreshFarms,
       }}

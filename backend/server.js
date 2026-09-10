@@ -11,6 +11,8 @@ import notificationRoutes from "./routes/notifications.js";
 import statsRoutes from "./routes/stats.js";
 import vetRoutes from "./routes/vets.js";
 import diagnosisRoutes from "./routes/diagnosis.js";
+import assistantRoutes from "./routes/assistant.js";
+import drugReferenceRoutes from "./routes/drugReference.js";
 
 dotenv.config();
 const app = express();
@@ -25,6 +27,8 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/stats", statsRoutes);
 app.use("/api/vets", vetRoutes);
 app.use("/api/diagnosis", diagnosisRoutes);
+app.use("/api/assistant", assistantRoutes);
+app.use("/api/drug-reference", drugReferenceRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);

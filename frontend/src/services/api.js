@@ -76,6 +76,10 @@ export const api = {
   deleteDrugReference: (id) =>
     request(`/drug-reference/${id}`, { method: "DELETE" }),
 
+  getAiAnalysis: () => request("/ai/analysis"),
+  submitAiFeedback: (body) =>
+    request("/ai/feedback", { method: "POST", body: JSON.stringify(body) }),
+  getAiFeedbackStats: () => request("/ai/feedback/stats"),
   aiDraftAnimal: (imageBase64, mediaType) =>
     request("/animals/ai-draft", {
       method: "POST",

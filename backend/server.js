@@ -13,6 +13,7 @@ import vetRoutes from "./routes/vets.js";
 import diagnosisRoutes from "./routes/diagnosis.js";
 import assistantRoutes from "./routes/assistant.js";
 import drugReferenceRoutes from "./routes/drugReference.js";
+import aiRoutes from "./routes/ai.js";
 
 dotenv.config();
 const app = express();
@@ -29,6 +30,7 @@ app.use("/api/vets", vetRoutes);
 app.use("/api/diagnosis", diagnosisRoutes);
 app.use("/api/assistant", assistantRoutes);
 app.use("/api/drug-reference", drugReferenceRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);

@@ -26,3 +26,17 @@ node_modules/
 dist/
 .env
 .env.local
+
+# AI service
+ai-service/.venv/
+**/__pycache__/
+.pytest_cache/
+ai-service/data/raw/*
+!ai-service/data/raw/.gitkeep
+ai-service/data/demo_seed.jsonai-service/data/raw/global_cattle_disease_detection_dataset.csv
+ai-service/data/raw/global_cattle_disease_detection_dataset.csv
+
+# Large datasets and Python cache
+ai-service/data/raw/global_cattle_disease_detection_dataset.csv
+__pycache__/
+*.py[cod]

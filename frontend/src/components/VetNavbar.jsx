@@ -35,6 +35,9 @@ export default function VetNavbar() {
         <NavLink to="/vet/risk-management" className={linkClass}>
           Risk Management
         </NavLink>
+        <NavLink to="/vet/ai-analysis" className={linkClass}>
+          AI Risk Analysis
+        </NavLink>
         <NavLink to="/vet/notifications" className={linkClass}>
           Notifications
         </NavLink>

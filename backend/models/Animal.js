@@ -7,6 +7,7 @@ const animalSchema = new mongoose.Schema(
     type: { type: String, required: true },
     ageMonths: { type: Number, required: true },
     weight: { type: Number, required: true },
+    isSynthetic: { type: Boolean, default: false },
     status: {
       type: String,
       enum: ["safe", "withdrawal", "unsafe"],

@@ -20,6 +20,7 @@ const medicineRecordSchema = new mongoose.Schema(
     },
     withdrawalPeriodDays: { type: Number, default: null },
     isAntimicrobial: { type: Boolean, default: false },
+    isSynthetic: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

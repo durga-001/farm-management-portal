@@ -23,6 +23,7 @@ import VetRiskManagement from "./pages/vet/RiskManagement";
 import VetAssistant from "./pages/vet/VetAssistant";
 import DrugReference from "./pages/vet/DrugReference";
 import VetNotifications from "./pages/vet/Notifications";
+import AiRiskAnalysis from "./pages/vet/AiRiskAnalysis";
 
 export default function App() {
   return (
@@ -63,6 +64,7 @@ export default function App() {
             <Route path="amu-diagnosis" element={<AmuDiagnosis />} />
             <Route path="risk-compliance" element={<RiskCompliance />} />
             <Route path="risk-management" element={<VetRiskManagement />} />
+            <Route path="ai-analysis" element={<AiRiskAnalysis />} />
             <Route path="notifications" element={<VetNotifications />} />
           </Route>
         </Routes>

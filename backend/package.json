@@ -1,7 +1,12 @@
 {
   "name": "farm-portal-backend",
   "type": "module",
-  "scripts": { "dev": "nodemon server.js", "start": "node server.js" },
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "seed:demo": "node scripts/seedDemo.js",
+    "seed:demo:clear": "node scripts/seedDemo.js --clear"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -10,5 +15,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.0"
   },
-  "devDependencies": { "nodemon": "^3.1.4" }
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }

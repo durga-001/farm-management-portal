@@ -87,9 +87,7 @@ export default function DrugReference() {
         Drug reference library
       </h1>
       <p className="text-sm text-gray-500 mb-6">
-        Add sourced dosage, withdrawal, and MRL facts here. This is the only
-        data the Research Assistant is allowed to answer from — every entry must
-        carry a source and is attributed to you.
+        Add sourced dosage, withdrawal, and MRL facts here.
       </p>
 
       <form

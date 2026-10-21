@@ -62,6 +62,10 @@ export const api = {
   getDataDiagnosis: () => request("/diagnosis/data"),
   getAmuDiagnosis: () => request("/diagnosis/amu"),
   getRiskCompliance: () => request("/diagnosis/risk"),
+  askAI: (body) =>
+    request("/ai/ask", { method: "POST", body: JSON.stringify(body) }),
+  addVetNote: (body) =>
+    request("/vetnotes", { method: "POST", body: JSON.stringify(body) }),
 
   askAssistant: (question) =>
     request("/assistant/ask", {

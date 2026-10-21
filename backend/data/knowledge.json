@@ -1,0 +1,32 @@
+[
+  {
+    "id": "mastitis",
+    "title": "Mastitis in dairy cattle",
+    "source": "Dummy starter data",
+    "text": "Mastitis is inflammation of the udder, usually from bacterial infection. Signs: swollen, hot, painful udder, clots or watery milk, reduced milk yield, sometimes fever. Needs veterinary examination and milk testing. Milk from affected animals should not be used for consumption until the vet clears it. Prevention: clean milking hygiene, teat dipping, dry housing."
+  },
+  {
+    "id": "fmd",
+    "title": "Foot and Mouth Disease (FMD)",
+    "source": "Dummy starter data",
+    "text": "FMD is a highly contagious viral disease of cattle, buffalo, sheep and goats. Signs: fever, blisters in mouth and on feet and teats, drooling, lameness, reduced milk. Isolate affected animals immediately and inform the veterinarian. Prevention: regular vaccination as per vet schedule, restrict animal movement during outbreaks."
+  },
+  {
+    "id": "brucellosis",
+    "title": "Brucellosis",
+    "source": "Dummy starter data",
+    "text": "Brucellosis is a bacterial disease causing abortion in late pregnancy, retained placenta and reduced fertility. It can spread to humans through raw milk and contact with birth fluids. Do not drink raw milk from suspected animals. Confirmation needs a blood test by a vet. Handle aborted material with gloves and report to the vet."
+  },
+  {
+    "id": "hs",
+    "title": "Haemorrhagic Septicaemia (HS)",
+    "source": "Dummy starter data",
+    "text": "HS affects cattle and buffalo, mostly in the rainy season. Signs: sudden high fever, swelling of throat and neck, difficulty breathing, drooling, often death within a day or two. This is an emergency. Call the vet immediately. Prevention: annual vaccination before monsoon."
+  },
+  {
+    "id": "lsd",
+    "title": "Lumpy Skin Disease (LSD)",
+    "source": "Dummy starter data",
+    "text": "LSD is a viral disease spread mainly by biting insects. Signs: fever, firm round nodules on the skin, swollen lymph nodes, reduced milk, sometimes limb swelling. Isolate sick animals, control flies and mosquitoes, and inform the vet. Vaccination is available as per local veterinary advice."
+  }
+]
